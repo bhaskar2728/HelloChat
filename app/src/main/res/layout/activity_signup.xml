@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignupActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_above="@+id/ll1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_10sdp">
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lottieAnimation"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:id="@+id/ll1"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:src="@drawable/ic_account_circle"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp" />
+            <EditText
+                android:id="@+id/txt1"
+                android:hint="Username..."
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:ems="12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img2"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:src="@drawable/ic_call"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp" />
+            <EditText
+                android:inputType="number"
+                android:id="@+id/txt2"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:ems="12"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:hint="Phone No..."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img3"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:src="@drawable/ic_mail"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp" />
+            <EditText
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:ems="12"
+                android:id="@+id/txt3"
+                android:hint="Email..."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img4"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:src="@drawable/ic_lock"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp" />
+            <EditText
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:id="@+id/txt4"
+                android:hint="Password..."
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"
+                android:ems="12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <Button
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@drawable/rounded_button"
+            android:layout_width="@dimen/_230sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:text="Sign Up"
+            android:id="@+id/btnSignUp"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_14sdp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
