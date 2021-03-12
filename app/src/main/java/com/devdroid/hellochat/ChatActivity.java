@@ -60,42 +60,40 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
         Firebase.setAndroidContext(this);
+
         btnSend = findViewById(R.id.btnSend);
         llBack = findViewById(R.id.llBack);
         edtMessage = findViewById(R.id.edtMessage);
         imgProfile = findViewById(R.id.profile_img);
-
         toolbar = findViewById(R.id.toolbar);
+        username  = findViewById(R.id.username);
+        txtStatus = findViewById(R.id.txtStatus);
+        messagesView = findViewById(R.id.messagesView);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
 
         intent = getIntent();
         final String userid = intent.getStringExtra("userid");
-        final String status = intent.getStringExtra("status");
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-        StorageReference profileRef = FirebaseStorage.getInstance().getReference().child("users/"+userid+".jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        FirebaseDatabase.getInstance().getReference("Users").child(userid).child("profile").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(imgProfile);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue()!=null)
+                    Picasso.get().load(dataSnapshot.getValue().toString()).placeholder(R.drawable.ic_account_circle).into(imgProfile);
             }
-        }).addOnFailureListener(new OnFailureListener() {
+
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("Profile:",e.toString());
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
-        username  = findViewById(R.id.username);
-        txtStatus = findViewById(R.id.txtStatus);
-
-        messagesView = findViewById(R.id.messagesView);
         messagesView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
@@ -115,11 +113,12 @@ public class ChatActivity extends AppCompatActivity {
                 String receiver = userid;
                 String message = edtMessage.getText().toString();
                 edtMessage.setText("");
+
                 if(!TextUtils.isEmpty(message)) {
                     CreateChat(sender, receiver,message);
                 }
                 else{
-                    Toast.makeText(ChatActivity.this, "Please fill the amount", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatActivity.this, "Cannot send empty message", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -153,8 +152,8 @@ public class ChatActivity extends AppCompatActivity {
         hashMap.put("isseen",false);
 
         java.util.Date date=new java.util.Date();
-        String time = date.toString().split(" ")[3].substring(0,5) ;
-
+        long time = System.currentTimeMillis();
+        //String time = date.toString().split(" ")[3].substring(0,5) ;
         hashMap.put("time",time);
 
         reference.child("Messages").push().setValue(hashMap);

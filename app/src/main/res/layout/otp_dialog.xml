@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:paddingBottom="@dimen/_20sdp"
+    android:id="@+id/otpDialog"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_margin="@dimen/_30sdp"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:src="@drawable/otp_image"/>
+
+    <TextView
+        android:textSize="@dimen/_20sdp"
+        android:fontFamily="@font/calibri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OTP Verification"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/txtBefore1"
+        android:textSize="@dimen/_15sdp"
+        android:fontFamily="@font/calibri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please enter your mobile number" />
+    <TextView
+        android:id="@+id/txtAfter1"
+        android:visibility="gone"
+        android:textSize="@dimen/_12sdp"
+        android:fontFamily="@font/calibri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please enter OTP sent to your number" />
+    <EditText
+        android:backgroundTint="@color/colorAccent"
+        android:textSize="@dimen/_25sdp"
+        android:textColor="@color/colorAccent"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:inputType="number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxEms="5"
+        android:minEms="5"
+        android:id="@+id/edtMobileNo"/>
+    <EditText
+        android:backgroundTint="@color/colorAccent"
+        android:textSize="@dimen/_25sdp"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:textColor="@color/colorAccent"
+        android:inputType="number"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxEms="3"
+        android:minEms="3"
+        android:id="@+id/edtOTP"/>
+    <TextView
+        android:id="@+id/txtAfter3"
+        android:visibility="gone"
+        android:textSize="@dimen/_15sdp"
+        android:fontFamily="@font/calibri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Didn't receive OTP?" />
+    <TextView
+        android:textColor="@color/colorPrimary"
+        android:id="@+id/txtAfter4"
+        android:visibility="gone"
+        android:textStyle="bold"
+        android:textSize="@dimen/_15sdp"
+        android:fontFamily="@font/calibri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resend Code" />
+
+    <Button
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:id="@+id/btnGetOtp"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:background="@drawable/rounded_button"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:text="Get OTP"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_14sdp"/>
+    <Button
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:id="@+id/btnVerify"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:background="@drawable/rounded_button"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:text="Verify and Proceed"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/_14sdp"/>
+
+
+</LinearLayout>

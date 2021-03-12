@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/bottomSheetEditContainer"
+    android:padding="@dimen/_15sdp"
+    android:background="@drawable/round_dialog"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter your name"
+            android:textStyle="bold"
+            android:fontFamily="@font/calibri"
+            android:textSize="@dimen/_16sdp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:src="@drawable/ic_account_circle"
+            android:tint="@android:color/black"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp" />
+        <EditText
+            android:backgroundTint="@color/colorAccent"
+            android:id="@+id/edtName"
+            android:hint="Name..."
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:inputType="textEmailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
+            android:ems="12"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+    <TextView
+        android:id="@+id/txtSave"
+        android:textColor = "@color/colorAccent"
+        android:textSize="@dimen/_13sdp"
+        android:background="?attr/selectableItemBackground"
+        android:layout_marginRight="@dimen/_20sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SAVE"/>
+        <TextView
+            android:id="@+id/txtCancel"
+            android:textColor = "@color/colorAccent"
+            android:textSize="@dimen/_13sdp"
+            android:background="?attr/selectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CANCEL"/>
+    </LinearLayout>
+
+</LinearLayout>

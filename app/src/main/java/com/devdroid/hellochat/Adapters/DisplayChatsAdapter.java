@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +15,9 @@ import com.devdroid.hellochat.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapter.ViewHolder> {
 
@@ -25,7 +28,7 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
     private ArrayList<Chats> chatsArrayList;
     FirebaseUser firebaseUser;
 
-    public DisplayChatsAdapter(Context context,ArrayList<Chats> arrayList){
+    public DisplayChatsAdapter(Context context, ArrayList<Chats> arrayList) {
         this.context = context;
         this.chatsArrayList = arrayList;
     }
@@ -33,11 +36,10 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType == MSG_RIGHT) {
+        if (viewType == MSG_RIGHT) {
             View view = LayoutInflater.from(context).inflate(R.layout.right_custom_row, parent, false);
             return new ViewHolder(view);
-        }
-        else{
+        } else {
             View view = LayoutInflater.from(context).inflate(R.layout.left_custom_row, parent, false);
             return new ViewHolder(view);
         }
@@ -49,18 +51,17 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
         Chats chat = chatsArrayList.get(position);
         holder.message.setText(chat.getMessage());
 
-        java.util.Date date=new java.util.Date();
-        String date_str = date.toString().split(" ")[2] + " " + date.toString().split(" ")[1];
+        long chatTime =  chat.getTime();
+        Date dateObjectChat = new Date(chatTime);
+        String timeChatToDisplay = new SimpleDateFormat("h:mm a").format(dateObjectChat);
 
+        holder.time.setText(timeChatToDisplay);
 
-            holder.time.setText(chat.getTime());
-            if(chat.isIsseen()){
-                holder.txtSeen.setText("Seen");
-            }
-            else{
-                holder.txtSeen.setText("Delivered");
-            }
-
+        if (chat.isIsseen()) {
+            holder.txtSeen.setText("Seen");
+        } else {
+            holder.txtSeen.setText("Delivered");
+        }
 
 
     }
@@ -70,11 +71,9 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
         return chatsArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView message;
-        TextView time;
-        TextView txtSeen;
+        TextView message,time,txtSeen;
 
         public ViewHolder(@NonNull View itemView) {
 
@@ -88,11 +87,10 @@ public class DisplayChatsAdapter extends RecyclerView.Adapter<DisplayChatsAdapte
     @Override
     public int getItemViewType(int position) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(chatsArrayList.get(position).getSender().equals(firebaseUser.getUid())){
+        if (chatsArrayList.get(position).getSender().equals(firebaseUser.getUid())) {
 
             return MSG_RIGHT;
-        }
-        else {
+        } else {
 
             return MSG_LEFT;
         }

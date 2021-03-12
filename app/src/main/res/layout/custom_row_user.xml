@@ -10,6 +10,7 @@
     android:id="@+id/profile_img"
     android:src="@drawable/ic_account_circle"/>
     <LinearLayout
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -23,8 +24,7 @@
                 android:textStyle="bold"
                 android:fontFamily="@font/calibri"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Username" />
+                android:layout_height="wrap_content" />
             <TextView
                 android:layout_alignParentRight="true"
                 android:id="@+id/txtTime"
@@ -41,9 +41,11 @@
             android:layout_marginLeft="@dimen/_8sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <TextView
             android:alpha="0.6"
-            android:text = "hekekekkekek"
             android:id="@+id/last_msg"
             android:layout_marginLeft="@dimen/_8sdp"
             android:ellipsize="end"
@@ -53,6 +55,23 @@
             android:singleLine="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:background="@drawable/round"
+                android:backgroundTint="@color/colorAccent"
+                android:visibility="gone"
+                android:id="@+id/rlUnseen"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp">
+                <TextView
+                    android:id="@+id/txtNumUnseen"
+                    android:textSize="@dimen/_11sdp"
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"/>
+            </RelativeLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 </LinearLayout>

@@ -10,13 +10,19 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,9 +46,11 @@ public class ProfileActivity extends AppCompatActivity {
     StorageReference storageReference;
     FirebaseUser firebaseUser;
     Intent intent;
-    TextView edtUsername,edtEmail;
+    TextView edtUsername, txtHeading,txtEP;
     ProgressBar progressBar;
     DatabaseReference databaseReference;
+    ImageView imgPhone,imgEmail;
+    LinearLayout llName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +63,8 @@ public class ProfileActivity extends AppCompatActivity {
         databaseReference.child(firebaseUser.getUid()).child("profile").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Picasso.get().load(dataSnapshot.getValue().toString()).placeholder(R.drawable.ic_account_circle).into(imgView);
+                if(dataSnapshot.getValue()!=null)
+                    Picasso.get().load(dataSnapshot.getValue().toString()).placeholder(R.drawable.ic_account_circle).into(imgView);
             }
 
             @Override
@@ -66,16 +75,72 @@ public class ProfileActivity extends AppCompatActivity {
 
         imgEdit = findViewById(R.id.imgEdit);
         imgView = findViewById(R.id.imgView);
-        edtEmail = findViewById(R.id.edtEmail);
+        txtEP = findViewById(R.id.txtEP);
+        txtHeading = findViewById(R.id.txtHeading);
         edtUsername = findViewById(R.id.edtUsername);
         progressBar = findViewById(R.id.progressBar);
+        imgEmail = findViewById(R.id.imgEmail);
+        imgPhone = findViewById(R.id.imgPhone);
+        imgEdit = findViewById(R.id.imgEdit);
+        llName = findViewById(R.id.llName);
+
+        llName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(ProfileActivity.this,R.style.BottomSheetDialogTheme);
+                View bottomSheetDialogView = LayoutInflater.from(ProfileActivity.this).inflate(R.layout.bottom_dialog_edit,(LinearLayout)findViewById(R.id.bottomSheetEditContainer));
+
+                TextView txtSave = bottomSheetDialogView.findViewById(R.id.txtSave);
+                TextView txtCancel = bottomSheetDialogView.findViewById(R.id.txtCancel);
+                final EditText edtName = bottomSheetDialogView.findViewById(R.id.edtName);
+
+                edtName.setText(edtUsername.getText().toString());
+
+                txtCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+
+                txtSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if(!TextUtils.isEmpty(edtName.getText().toString())) {
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("username", edtName.getText().toString());
+                            reference.updateChildren(map);
+                            edtUsername.setText(edtName.getText().toString());
+                        }
+                        else{
+                            Toast.makeText(ProfileActivity.this, "Please enter valid name", Toast.LENGTH_SHORT).show();
+                        }
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+
+                bottomSheetDialog.setContentView(bottomSheetDialogView);
+                bottomSheetDialog.show();
+            }
+        });
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading");
 
         intent = getIntent();
         edtUsername.setText(intent.getStringExtra("username"));
-        edtEmail.setText(intent.getStringExtra("email"));
+        if(intent.getStringExtra("email")!=null) {
+            txtHeading.setText("Email");
+            txtEP.setText(intent.getStringExtra("email"));
+        }
+        else if(intent.getStringExtra("phone")!=null){
+            imgEmail.setVisibility(View.GONE);
+            imgPhone.setVisibility(View.VISIBLE);
+            txtHeading.setText("Phone");
+            txtEP.setText(intent.getStringExtra("phone"));
+        }
 
         imgEdit.setOnClickListener(new View.OnClickListener() {
             @Override

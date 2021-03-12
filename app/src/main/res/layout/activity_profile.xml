@@ -7,110 +7,132 @@
     tools:context=".ProfileActivity">
 
 
+    <LinearLayout
+        android:id="@+id/llName"
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl1"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:padding="@dimen/_10sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:src="@drawable/ic_account_circle_black_24dp"
+            android:tint="@android:color/black" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:src="@drawable/ic_baseline_edit_24"
+                android:tint="@color/colorAccent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/edtUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bhaskar Purohit"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llName"
+        android:padding="@dimen/_10sdp">
+
+        <ImageView
+            android:id="@+id/imgEmail"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:src="@drawable/ic_mail"
+            android:tint="@color/Black"/>
+
+        <ImageView
+            android:id="@+id/imgPhone"
+            android:visibility="gone"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:src="@drawable/ic_baseline_phone_android_24"
+            android:tint="@color/Black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="@dimen/_10sdp" />
+
+            <TextView
+                android:id="@+id/txtEP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bhaskarpurohit27@gmail.com"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/rl1"
-        android:layout_marginTop="@dimen/_50sdp"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
         android:layout_centerHorizontal="true"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp">
+        android:layout_marginTop="@dimen/_50sdp">
 
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgView"
-        android:src="@drawable/ic_account_circle"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="@dimen/_100sdp"/>
 
         <ProgressBar
-            android:visibility="gone"
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="@dimen/_5sdp"
+            android:id="@+id/imgView"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/ic_account_circle" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imgEdit"
-            android:src="@drawable/ic_digital_camera"
             android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"/>
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:src="@drawable/ic_digital_camera" />
 
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/ll1"
-        android:padding="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_50sdp"
-        android:layout_below="@+id/rl1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:tint="@android:color/black"
-            android:src="@drawable/ic_account_circle_black_24dp"/>
-        <LinearLayout
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Name"/>
-            <TextView
-                android:id="@+id/edtUsername"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bhaskar Purohit"/>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:padding="@dimen/_10sdp"
-        android:layout_below="@+id/ll1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="@dimen/_25sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:src="@drawable/ic_mail" />
-        <LinearLayout
-            android:layout_marginLeft="@dimen/_15sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email"/>
-            <TextView
-                android:id="@+id/edtEmail"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="bhaskarpurohit27@gmail.com"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/btnLogin"
-        android:layout_marginBottom="@dimen/_30sdp"
-        android:background="@drawable/rounded_button"
-        android:layout_width="@dimen/_230sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:text="Save"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/_14sdp"/>
 
 </RelativeLayout>

@@ -2,11 +2,14 @@ package com.devdroid.hellochat.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,7 +28,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,6 +40,7 @@ public class DisplayUsersAdapter extends RecyclerView.Adapter<DisplayUsersAdapte
     private ArrayList<User> userArrayList;
     private ArrayList<User> userArrayListFull;
     String theLastMessage,lastMessageTime;
+    int isSeen,countNotSeen;
 
     public DisplayUsersAdapter(Context context,ArrayList<User> arrayList){
         this.context = context;
@@ -57,7 +63,7 @@ public class DisplayUsersAdapter extends RecyclerView.Adapter<DisplayUsersAdapte
         holder.username.setText(user.getUsername());
         holder.email.setText(user.getEmail());
 
-        lastMessage(user.getID(),holder.last_msg,holder.last_time);
+        lastMessage(user.getID(),holder.last_msg,holder.last_time,holder.txtNumUnseen,holder.rlUnseen);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,19 +89,6 @@ public class DisplayUsersAdapter extends RecyclerView.Adapter<DisplayUsersAdapte
             }
         });
 
-        /*StorageReference profileRef = FirebaseStorage.getInstance().getReference().child("users/"+user.getID()+".jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(holder.imgProfile);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("Profile:",e.toString());
-            }
-        });*/
-
 
     }
 
@@ -106,8 +99,9 @@ public class DisplayUsersAdapter extends RecyclerView.Adapter<DisplayUsersAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView username,last_msg,email,last_time;
+        TextView username,last_msg,email,last_time,txtNumUnseen;
         CircleImageView imgProfile;
+        RelativeLayout rlUnseen;
 
         public ViewHolder(@NonNull View itemView) {
 
@@ -117,6 +111,8 @@ public class DisplayUsersAdapter extends RecyclerView.Adapter<DisplayUsersAdapte
             last_msg = itemView.findViewById(R.id.last_msg);
             imgProfile = itemView.findViewById(R.id.profile_img);
             last_time = itemView.findViewById(R.id.txtTime);
+            txtNumUnseen = itemView.findViewById(R.id.txtNumUnseen);
+            rlUnseen = itemView.findViewById(R.id.rlUnseen);
         }
     }
 
@@ -155,7 +151,9 @@ public class DisplayUsersAdapter extends RecyclerView.Adapter<DisplayUsersAdapte
             notifyDataSetChanged();
         }
     };
-    private void lastMessage(final String userid,final TextView last_msg,final TextView txtTime){
+    private void lastMessage(final String userid, final TextView last_msg, final TextView txtTime, final TextView txtNumUnseen, final RelativeLayout rlUnseen){
+
+        countNotSeen = 0;
         theLastMessage = "default";
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Messages");
@@ -169,7 +167,35 @@ public class DisplayUsersAdapter extends RecyclerView.Adapter<DisplayUsersAdapte
                         if(chats.getReceiver().equals(firebaseUser.getUid()) && chats.getSender().equals(userid) ||
                                 chats.getReceiver().equals(userid) && chats.getSender().equals(firebaseUser.getUid())){
                             theLastMessage = chats.getMessage();
-                            lastMessageTime = chats.getTime();
+
+
+                            long chatTime =  chats.getTime();
+                            long todayTime = System.currentTimeMillis();
+
+                            Date dateObjectChat = new Date(chatTime);
+                            Date dateObjectToday = new Date(todayTime);
+
+                            String dateChatSplit[] = dateObjectChat.toString().split(" ");
+                            String dateTodaySplit[] = dateObjectToday.toString().split(" ");
+
+                            String dateChatToDisplay = dateChatSplit[1] + " " + dateChatSplit[2] + ", " + dateChatSplit[5];
+                            String timeChatToDisplay = new SimpleDateFormat("h:mm a").format(dateObjectChat);
+
+                            String dateTodayToDisplay = dateTodaySplit[1] + " " + dateTodaySplit[2] + ", " + dateTodaySplit[5];
+
+                            if(chats.getReceiver().equals(firebaseUser.getUid()) && !chats.isIsseen()) {
+                                isSeen = 0;
+                                countNotSeen++;
+                            }
+                            else
+                                isSeen = 1;
+
+                            if(dateTodayToDisplay.equals(dateChatToDisplay)){
+                                lastMessageTime = timeChatToDisplay;
+                            }
+                            else{
+                                lastMessageTime = dateChatToDisplay;
+                            }
                         }
                     }
                 }
@@ -182,6 +208,18 @@ public class DisplayUsersAdapter extends RecyclerView.Adapter<DisplayUsersAdapte
 
                     default:
                         last_msg.setText(theLastMessage);
+
+                        if(isSeen == 0) {
+                            Log.d("Check:","" + countNotSeen);
+                            rlUnseen.setVisibility(View.VISIBLE);
+                            txtNumUnseen.setText("" + countNotSeen);
+                            last_msg.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                            last_msg.setAlpha(1);
+                        }
+                        else{
+                            rlUnseen.setVisibility(View.GONE);
+                        }
+
                         txtTime.setText(lastMessageTime);
                         break;
                 }

@@ -65,11 +65,22 @@
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/usersView">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        android:id="@+id/usersView"/>
+        <TextView
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No new users to display..."
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/_15sdp"
+            android:id="@+id/txtNoItems"
+            android:fontFamily="@font/calibri"/>
+    </RelativeLayout>
 
 </LinearLayout>

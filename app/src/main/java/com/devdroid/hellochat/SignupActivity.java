@@ -42,25 +42,22 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
         Firebase.setAndroidContext(this);
         mAuth = FirebaseAuth.getInstance();
 
         progressBar = new ProgressDialog(this);
 
         btnSignUp = findViewById(R.id.btnSignUp);
-
         txt1 = findViewById(R.id.txt1);
         txt2 = findViewById(R.id.txt2);
         txt3 = findViewById(R.id.txt3);
         txt4 = findViewById(R.id.txt4);
-
         img1 = findViewById(R.id.img1);
         img2 = findViewById(R.id.img2);
         img3 = findViewById(R.id.img3);
         img4 = findViewById(R.id.img4);
-
         lottieAnimation = findViewById(R.id.lottieAnimation);
+
         lottieAnimation.setAnimation(R.raw.signup_animation);
         lottieAnimation.playAnimation();
 

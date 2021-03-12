@@ -15,8 +15,8 @@
             android:paddingLeft="@dimen/_8sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello how are you"
-            android:minEms="5"
+            android:text="Default"
+            android:minEms="6"
             android:maxEms="20"
             android:textSize="@dimen/_12sdp"/>
         <LinearLayout
@@ -27,7 +27,7 @@
                 android:paddingLeft="@dimen/_8sdp"
                 android:textStyle="italic"
                 android:id="@+id/time"
-                android:text="Today"
+                android:text="12:00 PM"
                 android:textSize="@dimen/_8sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

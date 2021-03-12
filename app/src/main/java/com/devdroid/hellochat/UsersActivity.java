@@ -9,14 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.devdroid.hellochat.Adapters.DisplayUsersAdapter;
 import com.devdroid.hellochat.Model.User;
@@ -38,11 +41,14 @@ public class UsersActivity extends AppCompatActivity {
 
     RecyclerView usersView;
     DisplayUsersAdapter displayUsersAdapter;
-    ArrayList<User> userArrayList;
+    ArrayList<User> userArrayList,friendsList;
+    ArrayList<String> friendsIdList;
     ProgressDialog progressDialog;
     Toolbar toolbar,toolbarSearch;
     EditText edtSearch;
     CircleImageView imgBack,imgBackFromSearch;
+    int flag;
+    TextView txtNoItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,21 +57,19 @@ public class UsersActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         toolbarSearch = findViewById(R.id.toolbarSearch);
+        edtSearch = findViewById(R.id.edtSearch);
+        imgBack = findViewById(R.id.imgBack);
+        imgBackFromSearch = findViewById(R.id.imgBackFromSearch);
+        usersView = findViewById(R.id.usersView);
+        txtNoItems = findViewById(R.id.txtNoItems);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-
-        edtSearch = findViewById(R.id.edtSearch);
-
-        imgBack = findViewById(R.id.imgBack);
-        imgBackFromSearch = findViewById(R.id.imgBackFromSearch);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-//                startActivity(new Intent(UsersActivity.this,AfterLogin.class));
-//                finishAffinity();
             }
         });
 
@@ -98,12 +102,19 @@ public class UsersActivity extends AppCompatActivity {
             }
         });
 
-        usersView = findViewById(R.id.usersView);
         usersView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         usersView.setHasFixedSize(true);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading");
+
+        Intent intent = getIntent();
+        friendsList = intent.getExtras().getParcelableArrayList("friendsList");
+
+        friendsIdList = new ArrayList<>();
+        for(User user: friendsList){
+            friendsIdList.add(user.getID());
+        }
 
         userArrayList = new ArrayList<>();
         DisplayUsers();
@@ -122,12 +133,16 @@ public class UsersActivity extends AppCompatActivity {
                     progressDialog.show();
                 }
                 userArrayList.clear();
+                flag = 0;
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
                     User user = snapshot.getValue(User.class);
-                    if(!user.getID().equals(firebaseUser.getUid())){
+                    if(!user.getID().equals(firebaseUser.getUid()) && !friendsIdList.contains(user.getID())){
                         userArrayList.add(user);
+                        flag = 1;
                     }
                 }
+                if(flag == 0)
+                    txtNoItems.setVisibility(View.VISIBLE);
                 displayUsersAdapter = new DisplayUsersAdapter(UsersActivity.this,userArrayList);
                 usersView.setAdapter(displayUsersAdapter);
                 progressDialog.dismiss();
@@ -151,25 +166,6 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menusearch, menu);
-
-//        MenuItem menuItem = menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) menuItem.getActionView();
-//
-//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                //toolbar.setVisibility(GONE);
-//                getSupportActionBar().hide();
-//                displayUsersAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
         return true;
     }
 

@@ -4,10 +4,10 @@ public class Chats {
     private String sender;
     private String receiver;
     private String message;
-    private String time;
+    private long time;
     private boolean isseen;
 
-    public Chats(String sender,String receiver,String message,String time,Boolean isseen){
+    public Chats(String sender,String receiver,String message,long time,Boolean isseen){
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
@@ -18,7 +18,7 @@ public class Chats {
 
     }
 
-    public String getTime(){
+    public long getTime(){
 
         return time;
     }
@@ -34,7 +34,7 @@ public class Chats {
 
         return message;
     }
-    public  void setTime(String time){
+    public  void setTime(long time){
         this.time = time;
     }
     public void setSender(String sender){
