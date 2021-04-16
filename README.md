@@ -8,7 +8,7 @@ A chat android application
 <img src="https://github.com/bhaskar2728/HelloChat/blob/main/Screenshots/Screenshot_20210416-165942.png" width="300" height="600">
 <img src="https://github.com/bhaskar2728/HelloChat/blob/main/Screenshots/Screenshot_20210416-170002.png" width="300" height="600">
 <img src="https://github.com/bhaskar2728/HelloChat/blob/main/Screenshots/Screenshot_20210310-170342.jpg" width="300" height="600">
-<img src="https://github.com/bhaskar2728/HelloChat/blob/main/Screenshots/Screenshot_20210310-170352.jpg" width="300" height="600">
+<img src="https://github.com/bhaskar2728/HelloChat/blob/main/Screenshots/Screenshot_20210416-171217.png" width="300" height="600">
 
 
 
